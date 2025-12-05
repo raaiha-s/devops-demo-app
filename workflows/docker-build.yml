@@ -3,14 +3,14 @@ name: Build & Push Docker Image
 on:
   push:
     branches:
-      - main
+      - main  # triggers on push to main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout repo
       uses: actions/checkout@v4
 
     - name: Set up Docker Buildx
@@ -22,8 +22,8 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build & Push Docker Image
+    - name: Build and push Docker image
       uses: docker/build-push-action@v6
       with:
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-demo-app:${{ github.sha }}
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-demo-app:latest
