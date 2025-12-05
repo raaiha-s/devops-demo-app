@@ -3,7 +3,7 @@ name: Build & Push Docker Image
 on:
   push:
     branches:
-      - main  # triggers on push to main
+      - main
 
 jobs:
   build:
@@ -22,8 +22,10 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build and push Docker image
+    - name: Build & push Docker image
       uses: docker/build-push-action@v6
       with:
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-demo-app:latest
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/devops-demo-app:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/devops-demo-app:${{ github.sha }}
